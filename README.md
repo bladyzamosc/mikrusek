@@ -2,27 +2,43 @@
 
 ## Background
 
-Mikrusek is not for any commercial usage. The only reason why this project was created was a need to create something for the author of this project. You can assume that this was created only for educational purposes. 
+Mikrusek is not for any commercial usage.
+You can assume that this was built only for educational purposes.
 You can't create anything apart from the real world and therefore more about s perspective you will read in the 'Purpose' section.
 
-## Stack
+## Tech-stack
+
+### Languages 
+
+- Python
+- Java
+- Kotlin
+
+### Technologies
+
+- Spring & Spring Boot
+- Kafka
+- Docker
 
 ## Modules 
 
-Micrusek consists of 
+Micrusek consists of: 
 
 - desing - Python module with design scripts
 
 ## Purpose
 
+Mikrus will be responsible for the storing time series data from multiple sources. Data from IOT, weather stations, meters and many sources will be able acceptable.   
+
 ## Architecture
 
 ### Context diagram
 
-![Main Context!](design/assets/context.png "San Juan Mountains")
+![Main Context!](design/assets/context.png "Context")
 
+### Container
 
-
+![Container!](design/assets/container.png "Container")
 
 
 
