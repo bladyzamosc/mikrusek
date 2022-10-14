@@ -1,22 +1,33 @@
-from diagrams import Diagram, Cluster
-from diagrams.aws.compute import ECS
-from diagrams.aws.database import RDS
+from diagrams import Diagram, Cluster, Edge
+from diagrams.alibabacloud.compute import ElasticSearch
+from diagrams.aws.management import Config
+from diagrams.aws.migration import ADS
 from diagrams.aws.network import APIGateway
+from diagrams.azure.database import SQLDatabases, DataLake
+from diagrams.azure.web import AppServices, Search
 from diagrams.onprem.queue import Kafka
 
 with Diagram("Mikrusek - containers", show=False, filename="./assets/container"):
     apiGateway = APIGateway("Edge service")
-    timeService = ECS("TimeSeries service")
-    nodeService = ECS("Node service")
+    timeService = AppServices("TimeSeries service")
+    nodeService = AppServices("Node service")
+    webBrowser = AppServices("Web client")
 
-    timeSeriesDatabase = RDS("TS Storage")
-    nodeDatabase = RDS("Node Storage")
+    timeSeriesDatabase = DataLake("TS Storage")
+    nodeDatabase = SQLDatabases("Node Storage")
 
-    processingService = ECS("Processing service")
-    kafka = Kafka("Message broker")
+    processingService = AppServices("Processing service")
+    kafka = Kafka("Event store")
 
-    configurationService = ECS("Configuration")
-    serviceDiscovery = ECS("Service discovery")
+    searchEngine = Search("Search engine")
+
+    configurationService = Config("Configuration")
+    serviceDiscovery = ADS("Service discovery")
+
+    readConfigEdge = Edge(color='yellow')
+    serviceDiscoveryEdge = Edge(color='grey')
+    standartBiEdge = Edge(color='black', forward=True, reverse=True)
+    standartEdge = Edge(color='black', forward=True)
 
     with Cluster("TS Cluster"):
         ts_cluster = timeService
@@ -26,20 +37,25 @@ with Diagram("Mikrusek - containers", show=False, filename="./assets/container")
         node_cluster = nodeService
         node_cluster - nodeDatabase
 
-    apiGateway >> ts_cluster
-    apiGateway >> node_cluster
-    apiGateway >> processingService >> kafka >> timeService
-    kafka >> processingService
-    processingService >> timeService
+    apiGateway >> standartBiEdge >> ts_cluster
+    apiGateway >> standartBiEdge >> node_cluster
+    apiGateway >> standartEdge >> processingService >> standartBiEdge >> kafka >> standartEdge >> timeService
+    processingService >> standartEdge >> timeService
 
-    apiGateway >> configurationService
-    apiGateway >> serviceDiscovery
+    webBrowser >> standartEdge >> apiGateway
 
-    timeService >> configurationService
-    timeService >> serviceDiscovery
+    apiGateway >> readConfigEdge >> configurationService
+    apiGateway >> serviceDiscoveryEdge >> serviceDiscovery
 
-    processingService >> configurationService
-    processingService >> serviceDiscovery
+    timeService >> readConfigEdge >> configurationService
+    timeService >> serviceDiscoveryEdge >> serviceDiscovery
 
-    nodeService >> configurationService
-    nodeService >> serviceDiscovery
+    processingService >> readConfigEdge >> configurationService
+    processingService >> serviceDiscoveryEdge >> serviceDiscovery
+
+    nodeService >> readConfigEdge >> configurationService
+    nodeService >> serviceDiscoveryEdge >> serviceDiscovery
+
+    apiGateway >> standartBiEdge >> searchEngine
+    searchEngine >> readConfigEdge >> configurationService
+    searchEngine >> serviceDiscoveryEdge >> serviceDiscovery

@@ -2,7 +2,7 @@ from diagrams import Diagram, Cluster
 from diagrams.c4 import System
 
 with Diagram("Mikrusek - context diagram", show=False, filename="./assets/context"):
-    webbrowser = System(name="Web client", external=True)
+    webbrowser = System(name="Web client", external=False)
     thirdPartyClient = System("3-rd party application", external=True)
     mobileClient = System("Mobile", external=True)
 
