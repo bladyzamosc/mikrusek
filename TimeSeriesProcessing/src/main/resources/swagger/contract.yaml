@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Timeseries processing
+  contact:
+    email: bladyzamosc@gmail.com
+  version: 1.0.0
+tags:
+  - name: TimeSeries
+    description: timeSeries processing
+paths:
+  /timeseries:
+    post:
+      tags:
+        - TimeSeries
+      summary: Add timeseries
+      description: Add timeseries for processing
+      operationId: addTimeSeries
+      requestBody:
+        description: TimeSeries
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeSeries'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '405':
+          description: Invalid input
+components:
+  schemas:
+    TimeSeries:
+      type: object
+      properties:
+        nodeId:
+          type: integer
+          format: int64
+        timestamp:
+          type: integer
+          format: int64
+        timestampFrom:
+          type: integer
+          format: int64
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/Value'
+    Value:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: integer
+          format: int64
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

@@ -1,5 +1,4 @@
 from diagrams import Diagram, Cluster, Edge
-from diagrams.alibabacloud.compute import ElasticSearch
 from diagrams.aws.management import Config
 from diagrams.aws.migration import ADS
 from diagrams.aws.network import APIGateway
