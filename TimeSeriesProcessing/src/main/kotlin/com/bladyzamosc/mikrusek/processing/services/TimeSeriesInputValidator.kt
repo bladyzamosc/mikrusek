@@ -12,19 +12,15 @@ class TimeSeriesInputValidator {
     }
 
     private fun validateValues(timeSeries: TimeSeries) {
-        if (timeSeries.values == null || timeSeries.values.isEmpty()) {
+        timeSeries.values ?: throw TimeSeriesProcessingException("Values must be set")
+        if (timeSeries.values.isEmpty()) {
             throw TimeSeriesProcessingException("Non-empty values is required")
         }
     }
 
     private fun validateMandatoryFields(timeSeries: TimeSeries) {
-        if (timeSeries.nodeId == null) {
-            throw TimeSeriesProcessingException("NodeId is required")
-        }
-
-        if (timeSeries.timestamp == null) {
-            throw TimeSeriesProcessingException("Timestamp is required")
-        }
+        timeSeries.nodeId ?: throw TimeSeriesProcessingException("NodeId is required")
+        timeSeries.timestamp ?: throw TimeSeriesProcessingException("Timestamp is required")
     }
 
 }
