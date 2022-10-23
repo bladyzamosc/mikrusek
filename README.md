@@ -42,5 +42,16 @@ Mikrus will be responsible for the storing time series data from multiple source
 
 ![Container!](design/assets/container.png "Container")
 
+## Misc
+
+### Docker
+
+#### Processing
+
+```
+docker build -t mikrusek_processing .
+docker run -p 8081:8080 mikrusek_processing
+http://localhost:8081/swagger-ui/index.html
+```
 
 
