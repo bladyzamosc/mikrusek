@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.bladyzamosc.protocol";
+
+service MikrusekMessageService {
+  rpc accept(MikrusekMessage) returns (MikrusekMessageReply) {}
+}
+
+message MikrusekMessageReply
+{
+  string reply = 1;
+}
+
+message MikrusekMessage
+{
+  MikrusekMessageReplyHeader header = 1;
+  MikrusekMessageReplyPayload payload = 2;
+}
+
+message MikrusekMessageReplyHeader
+{
+  string MessageId = 1;
+  int64 MessageTimestamp = 2;
+  string Source = 3;
+  string Version = 4;
+}
+
+message MikrusekMessageReplyPayload {
+  TimeSeriesSection timeSeriesSection = 1;
+}
+
+message TimeSeriesSection {
+  int64 nodeId = 1;
+  int64 timestamp = 2;
+  int64 timestampFrom = 3;
+  repeated TimeSeriesValue values=4;
+}
+
+message TimeSeriesValue {
+  string key = 1;
+  int64 value = 2;
+}

@@ -20,6 +20,7 @@ You can't create anything apart from the real world and therefore more about s p
 - Swagger
 - Kafka
 - Docker
+- Protobuf
 
 ## Modules 
 
@@ -27,6 +28,7 @@ Micrusek consists of:
 
 - desing - Python module with design scripts
 - TimeSeriesProcessing - Kotlin module accepting incoming time series data. Swagger is available here (http://localhost:8080/swagger-ui/index.html)
+- InternalProtocol - library with generated protocol classes from proto schema.
 
 ## Purpose
 
