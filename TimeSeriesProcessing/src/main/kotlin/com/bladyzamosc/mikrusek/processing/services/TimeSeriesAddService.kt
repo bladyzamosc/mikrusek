@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service
  * Date: 14.10.2022
  */
 @Service
-class TimeSeriesAddService(private val validator: TimeSeriesInputValidator) {
+class TimeSeriesAddService(private val validator: TimeSeriesInputValidator,
+                           private val mikrusekCreator : MikrusekMessageCreator,
+                           private  val converter : TimeSeriesConverter) {
 
     fun addTimeSeries(timeSeries: TimeSeries): ApiResponse {
         validator.validate(timeSeries);
@@ -18,6 +20,7 @@ class TimeSeriesAddService(private val validator: TimeSeriesInputValidator) {
     }
 
     private fun handle(timeSeries: TimeSeries) {
-        // TODO implement me
+        val timeSeriesSection = converter.convert(timeSeries)
+        val mikrusekMessage = mikrusekCreator.createMessageWithTimeSeriesSection(timeSeriesSection)
     }
 }

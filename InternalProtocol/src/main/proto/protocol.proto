@@ -14,11 +14,11 @@ message MikrusekMessageReply
 
 message MikrusekMessage
 {
-  MikrusekMessageReplyHeader header = 1;
-  MikrusekMessageReplyPayload payload = 2;
+  MikrusekMessageHeader header = 1;
+  MikrusekMessagePayload payload = 2;
 }
 
-message MikrusekMessageReplyHeader
+message MikrusekMessageHeader
 {
   string MessageId = 1;
   int64 MessageTimestamp = 2;
@@ -26,7 +26,7 @@ message MikrusekMessageReplyHeader
   string Version = 4;
 }
 
-message MikrusekMessageReplyPayload {
+message MikrusekMessagePayload {
   TimeSeriesSection timeSeriesSection = 1;
 }
 
