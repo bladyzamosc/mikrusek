@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service
  * Date: 14.10.2022
  */
 @Service
-class TimeSeriesAddService(private val validator: TimeSeriesInputValidator,
-                           private val mikrusekCreator : MikrusekMessageCreator,
-                           private  val converter : TimeSeriesConverter) {
+class TimeSeriesAddService(
+    private val validator: TimeSeriesInputValidator,
+    private val mikrusekCreator: MikrusekMessageCreator,
+    private val converter: TimeSeriesConverter,
+    private val messageService: TimeSeriesMikrusekMessageService,
+    private  val streamObserver: MikrusekStreamObserver
+) {
 
     fun addTimeSeries(timeSeries: TimeSeries): ApiResponse {
         validator.validate(timeSeries);
@@ -22,5 +26,6 @@ class TimeSeriesAddService(private val validator: TimeSeriesInputValidator,
     private fun handle(timeSeries: TimeSeries) {
         val timeSeriesSection = converter.convert(timeSeries)
         val mikrusekMessage = mikrusekCreator.createMessageWithTimeSeriesSection(timeSeriesSection)
+        messageService.accept(mikrusekMessage,streamObserver)
     }
 }
