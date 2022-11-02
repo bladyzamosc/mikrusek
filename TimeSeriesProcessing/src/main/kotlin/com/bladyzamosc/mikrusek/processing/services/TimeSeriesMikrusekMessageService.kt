@@ -1,9 +1,9 @@
 package com.bladyzamosc.mikrusek.processing.services
 
 import com.bladyzamosc.protocol.MikrusekMessage
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.gson.Gson
 import org.lognet.springboot.grpc.GRpcService
+
+private const val ADD_TIME_SERIES_TOPIC_NAME = "add-time-series"
 
 /**
  * User: Z6EKI
@@ -13,7 +13,6 @@ import org.lognet.springboot.grpc.GRpcService
 class TimeSeriesMikrusekMessageService(private val producer: KafkaProducer) {
 
     fun send(request: MikrusekMessage) {
-        val gson = Gson()
-        producer.sendMessage("add-time-series", gson.toJson(request))
+        producer.sendMessage(ADD_TIME_SERIES_TOPIC_NAME, request)
     }
 }

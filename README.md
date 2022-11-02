@@ -71,16 +71,15 @@ http://localhost:8081/swagger-ui/index.html
 
 - zookeeper
 - kafka
+- kafka-ui
 
-###  Kafka manager/Offse explorer 
+###  Kafka-UI
 
 Accessible using the following address
 
 ```
 http://localhost:9000/
 ```
-- add cluster typing zookeeper address
-![img.png](img.png)
+
 - preview topics/partitions/messages
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
+![img_3.png](img_3.png)

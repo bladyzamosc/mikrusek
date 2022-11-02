@@ -21,7 +21,16 @@
         <gson.version>2.9.1</gson.version>
         <version.ktor>1.6.8</version.ktor>
         <version.metrics.core>3.0.2</version.metrics.core>
+        <version.kafka-protobuf-serializer>7.2.2</version.kafka-protobuf-serializer>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -58,6 +67,11 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-protobuf-serializer</artifactId>
+            <version>${version.kafka-protobuf-serializer}</version>
         </dependency>
         <dependency>
             <groupId>io.github.lognet</groupId>
