@@ -7,6 +7,7 @@ import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.support.SendResult
 import org.springframework.stereotype.Service
 import org.springframework.util.concurrent.ListenableFutureCallback
+import java.util.*
 
 /**
  * User: Z6EKI
@@ -17,15 +18,14 @@ class KafkaProducer {
     private val LOGGER: Logger = LoggerFactory.getLogger("KafkaProducer")
 
     @Autowired
-    private val kafkaTemplate: KafkaTemplate<Int, String>? = null
+    private val kafkaTemplate: KafkaTemplate<String, String>? = null
 
     fun sendMessage(topic: String?, message: String?) {
-        val future = kafkaTemplate!!.send(
-            topic!!, message
-        )
-        future.addCallback(object : ListenableFutureCallback<SendResult<Int?, String?>?> {
-            override fun onSuccess(result: SendResult<Int?, String?>?) {
-                LOGGER.info("sent message='{}' with offset={}", message, result!!.recordMetadata.offset())
+        val key = UUID.randomUUID().toString()
+        val future = kafkaTemplate!!.send(topic!!,key,  message)
+        future.addCallback(object : ListenableFutureCallback<SendResult<String?, String?>?> {
+            override fun onSuccess(result: SendResult<String?, String?>?) {
+                LOGGER.info("Message sent with offset={}, key={}, message='{}'", result!!.recordMetadata.offset(), key, message)
             }
 
             override fun onFailure(ex: Throwable) {

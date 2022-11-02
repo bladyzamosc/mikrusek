@@ -1,10 +1,8 @@
 package com.bladyzamosc.mikrusek.processing.services
 
 import com.bladyzamosc.protocol.MikrusekMessage
-import com.bladyzamosc.protocol.MikrusekMessageReply
-import com.bladyzamosc.protocol.MikrusekMessageServiceGrpc
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.gson.Gson
-import io.grpc.stub.StreamObserver
 import org.lognet.springboot.grpc.GRpcService
 
 /**
@@ -12,18 +10,10 @@ import org.lognet.springboot.grpc.GRpcService
  * Date: 28.10.2022
  */
 @GRpcService
-class TimeSeriesMikrusekMessageService(private val producer: KafkaProducer) :
-    MikrusekMessageServiceGrpc.MikrusekMessageServiceImplBase() {
+class TimeSeriesMikrusekMessageService(private val producer: KafkaProducer) {
 
-    override fun accept(request: MikrusekMessage?, responseObserver: StreamObserver<MikrusekMessageReply>?) {
-        super.accept(request, responseObserver)
-        val reply = MikrusekMessageReply.newBuilder()
-            .setReply("Request created: " + request?.header?.messageId)
-            .build();
+    fun send(request: MikrusekMessage) {
         val gson = Gson()
-        producer.sendMessage("ADD_TIME_SERIES", gson.toJson(request))
-        responseObserver?.onNext(reply)
-        responseObserver?.onCompleted()
+        producer.sendMessage("add-time-series", gson.toJson(request))
     }
-
 }

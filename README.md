@@ -48,12 +48,39 @@ Mikrus will be responsible for the storing time series data from multiple source
 
 ### Docker
 
+#### Docker compose
+
+- docker/docker-compose.yaml - all inside 
+- docker/docker-compose-no_processing.yaml - zookeeper + kafka + kafka manager
+
+```
+docker-compose up -d
+docker-compose down 
+docker-compose -f docker-compose-no_processing.yml up -d
+```
+
 #### Processing
 
 ```
-docker build -t mikrusek_processing .
-docker run -p 8081:8080 mikrusek_processing
+docker build -t mikrusek-processing .
+docker run -p 8081:8080 mikrusek-processing
 http://localhost:8081/swagger-ui/index.html
 ```
 
+#### Kafka
 
+- zookeeper
+- kafka
+
+###  Kafka manager/Offse explorer 
+
+Accessible using the following address
+
+```
+http://localhost:9000/
+```
+- add cluster typing zookeeper address
+![img.png](img.png)
+- preview topics/partitions/messages
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)

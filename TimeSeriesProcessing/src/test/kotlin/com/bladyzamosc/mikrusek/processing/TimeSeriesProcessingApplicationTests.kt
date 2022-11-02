@@ -42,12 +42,6 @@ class TimeSeriesProcessingApplicationTests {
         result = restTemplate.postForEntity("/timeseries", timeSeries, ApiResponse::class.java)
         assertEquals("Non-empty values is required", result.body?.message)
         assertEquals(405, result.statusCodeValue)
-        val value = Value(value = 1, key = "a")
-        array = arrayOf<Value>(value)
-        timeSeries = TimeSeries(nodeId = 1, timestamp = 1234455, values= array)
-        result = restTemplate.postForEntity("/timeseries", timeSeries, ApiResponse::class.java)
-        assertEquals("Successfully added", result.body?.message)
-        assertEquals(200, result.statusCodeValue)
     }
 
 }

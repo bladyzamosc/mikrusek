@@ -13,8 +13,7 @@ class TimeSeriesAddService(
     private val validator: TimeSeriesInputValidator,
     private val mikrusekCreator: MikrusekMessageCreator,
     private val converter: TimeSeriesConverter,
-    private val messageService: TimeSeriesMikrusekMessageService,
-    private  val streamObserver: MikrusekStreamObserver
+    private val messageService: TimeSeriesMikrusekMessageService
 ) {
 
     fun addTimeSeries(timeSeries: TimeSeries): ApiResponse {
@@ -26,6 +25,6 @@ class TimeSeriesAddService(
     private fun handle(timeSeries: TimeSeries) {
         val timeSeriesSection = converter.convert(timeSeries)
         val mikrusekMessage = mikrusekCreator.createMessageWithTimeSeriesSection(timeSeriesSection)
-        messageService.accept(mikrusekMessage,streamObserver)
+        messageService.send(mikrusekMessage)
     }
 }
