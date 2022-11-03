@@ -46,8 +46,8 @@ services:
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://broker:29092
-  mikrusek-processing:
-    image: mikrusek-processing
-    container_name: mikrusek-processing
+  mikrusek-command:
+    image: mikrusek-command
+    container_name: mikrusek-command
     ports:
       - "8091:8080"

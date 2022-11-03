@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.bladyzamosc.mikrusek</groupId>
-    <artifactId>TimeSeriesProcessing</artifactId>
+    <artifactId>mikrusek-command</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>TimeSeriesProcessing</name>
-    <description>TimeSeriesProcessing</description>
+    <name>mikrusek-command</name>
+    <description>Mikrusek command</description>
     <properties>
         <java.version>17</java.version>
         <kotlin.version>1.6.21</kotlin.version>
@@ -116,7 +116,7 @@
         </dependency>
         <dependency>
             <groupId>com.bladyzamosc.mikrusek</groupId>
-            <artifactId>InternalProtocol</artifactId>
+            <artifactId>internal-protocol</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -8,15 +8,13 @@ from diagrams.onprem.queue import Kafka
 
 with Diagram("Mikrusek - containers", show=False, filename="./assets/container"):
     apiGateway = APIGateway("Edge service")
-    timeService = AppServices("TimeSeries service")
-    nodeService = AppServices("Node service")
-    webBrowser = AppServices("Web client")
-
-    timeSeriesDatabase = DataLake("TS Storage")
-    nodeDatabase = SQLDatabases("Node Storage")
-
     processingService = AppServices("Processing service")
+    webBrowser = AppServices("Web client")
+    datastore = DataLake("TS Storage")
+    commandService = AppServices("Command service")
     kafka = Kafka("Event store")
+
+    queryService = AppServices("Query service")
 
     searchEngine = Search("Search engine")
 
@@ -29,31 +27,27 @@ with Diagram("Mikrusek - containers", show=False, filename="./assets/container")
     standartEdge = Edge(color='black', forward=True)
 
     with Cluster("TS Cluster"):
-        ts_cluster = timeService
-        ts_cluster - timeSeriesDatabase
+        processing_cluster = processingService
+        processing_cluster - datastore
+        queryService - datastore
 
-    with Cluster("Node Cluster"):
-        node_cluster = nodeService
-        node_cluster - nodeDatabase
+    apiGateway >> standartBiEdge >> processing_cluster
+    apiGateway >> standartEdge >> commandService >> standartBiEdge >> kafka >> standartEdge >> processingService
+    commandService >> standartEdge >> processingService
 
-    apiGateway >> standartBiEdge >> ts_cluster
-    apiGateway >> standartBiEdge >> node_cluster
-    apiGateway >> standartEdge >> processingService >> standartBiEdge >> kafka >> standartEdge >> timeService
-    processingService >> standartEdge >> timeService
+    apiGateway >> standartBiEdge >> queryService
+    queryService >> readConfigEdge >> configurationService
 
     webBrowser >> standartEdge >> apiGateway
 
     apiGateway >> readConfigEdge >> configurationService
     apiGateway >> serviceDiscoveryEdge >> serviceDiscovery
 
-    timeService >> readConfigEdge >> configurationService
-    timeService >> serviceDiscoveryEdge >> serviceDiscovery
-
     processingService >> readConfigEdge >> configurationService
     processingService >> serviceDiscoveryEdge >> serviceDiscovery
 
-    nodeService >> readConfigEdge >> configurationService
-    nodeService >> serviceDiscoveryEdge >> serviceDiscovery
+    commandService >> readConfigEdge >> configurationService
+    commandService >> serviceDiscoveryEdge >> serviceDiscovery
 
     apiGateway >> standartBiEdge >> searchEngine
     searchEngine >> readConfigEdge >> configurationService
