@@ -8,6 +8,55 @@ tags:
   - name: TimeSeries
     description: timeSeries processing
 paths:
+  /nodes:
+    put:
+      tags:
+        - Nodes
+      summary: Update node
+      description: update node
+      operationId: updateNode
+      requestBody:
+        description: Node
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Node'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '405':
+          description: Invalid input
+        '500':
+          description: Server error
+    post:
+      tags:
+        - Nodes
+      summary: Add node
+      description: Add node
+      operationId: addNode
+      requestBody:
+        description: Node
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Node'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '405':
+          description: Invalid input
+        '500':
+          description: Server error
   /timeseries:
     post:
       tags:
@@ -35,6 +84,16 @@ paths:
           description: Server error
 components:
   schemas:
+    Node:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        number:
+          type: string
     TimeSeries:
       type: object
       properties:

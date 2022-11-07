@@ -1,9 +1,6 @@
 package com.bladyzamosc.mikrusek.processing.services
 
-import com.bladyzamosc.protocol.MikrusekMessage
-import com.bladyzamosc.protocol.MikrusekMessageHeader
-import com.bladyzamosc.protocol.MikrusekMessagePayload
-import com.bladyzamosc.protocol.TimeSeriesSection
+import com.bladyzamosc.protocol.*
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -20,14 +17,23 @@ class MikrusekMessageCreator {
     fun createMessageWithTimeSeriesSection(timeSeriesSection: TimeSeriesSection): MikrusekMessage {
         return MikrusekMessage.newBuilder()
             .setHeader(createHeader())
-            .setPayload(createPayloadWithTimeSeriesSection(timeSeriesSection))
+            .setPayload(
+                MikrusekMessagePayload.newBuilder()
+                    .setTimeSeriesSection(timeSeriesSection)
+                    .build()
+            )
             .build();
     }
 
-    private fun createPayloadWithTimeSeriesSection(timeSeriesSection: TimeSeriesSection): MikrusekMessagePayload {
-        return MikrusekMessagePayload.newBuilder()
-            .setTimeSeriesSection(timeSeriesSection)
-            .build()
+    fun createMessageWithNodeSection(nodeSection: NodeSection): MikrusekMessage {
+        return MikrusekMessage.newBuilder()
+            .setHeader(createHeader())
+            .setPayload(
+                MikrusekMessagePayload.newBuilder()
+                    .setNodeSection(nodeSection)
+                    .build()
+            )
+            .build();
     }
 
     private fun createHeader(): MikrusekMessageHeader {

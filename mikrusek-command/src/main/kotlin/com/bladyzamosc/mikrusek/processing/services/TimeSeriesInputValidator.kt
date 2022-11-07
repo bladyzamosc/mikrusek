@@ -1,7 +1,7 @@
 package com.bladyzamosc.mikrusek.processing.services
 
 import com.bladyzamosc.mikrusek.generated.api.model.TimeSeries
-import com.bladyzamosc.mikrusek.processing.exceptions.TimeSeriesProcessingException
+import com.bladyzamosc.mikrusek.processing.exceptions.ProcessingException
 import org.springframework.stereotype.Service
 
 @Service
@@ -12,15 +12,15 @@ class TimeSeriesInputValidator {
     }
 
     private fun validateValues(timeSeries: TimeSeries) {
-        timeSeries.values ?: throw TimeSeriesProcessingException("Values must be set")
+        timeSeries.values ?: throw ProcessingException("Values must be set")
         if (timeSeries.values.isEmpty()) {
-            throw TimeSeriesProcessingException("Non-empty values is required")
+            throw ProcessingException("Non-empty values is required")
         }
     }
 
     private fun validateMandatoryFields(timeSeries: TimeSeries) {
-        timeSeries.nodeId ?: throw TimeSeriesProcessingException("NodeId is required")
-        timeSeries.timestamp ?: throw TimeSeriesProcessingException("Timestamp is required")
+        timeSeries.nodeId ?: throw ProcessingException("NodeId is required")
+        timeSeries.timestamp ?: throw ProcessingException("Timestamp is required")
     }
 
 }
