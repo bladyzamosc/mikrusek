@@ -8,7 +8,7 @@ from diagrams.onprem.queue import Kafka
 
 with Diagram("Mikrusek - containers", show=False, filename="./assets/container"):
     apiGateway = APIGateway("Edge service")
-    processingService = AppServices("Processing service")
+    engineService = AppServices("Engine service")
     webBrowser = AppServices("Web client")
     datastore = DataLake("TS Storage")
     commandService = AppServices("Command service")
@@ -27,13 +27,13 @@ with Diagram("Mikrusek - containers", show=False, filename="./assets/container")
     standartEdge = Edge(color='black', forward=True)
 
     with Cluster("TS Cluster"):
-        processing_cluster = processingService
+        processing_cluster = engineService
         processing_cluster - datastore
         queryService - datastore
 
     apiGateway >> standartBiEdge >> processing_cluster
-    apiGateway >> standartEdge >> commandService >> standartBiEdge >> kafka >> standartEdge >> processingService
-    commandService >> standartEdge >> processingService
+    apiGateway >> standartEdge >> commandService >> standartBiEdge >> kafka >> standartEdge >> engineService
+    commandService >> standartEdge >> engineService
 
     apiGateway >> standartBiEdge >> queryService
     queryService >> readConfigEdge >> configurationService
@@ -43,8 +43,8 @@ with Diagram("Mikrusek - containers", show=False, filename="./assets/container")
     apiGateway >> readConfigEdge >> configurationService
     apiGateway >> serviceDiscoveryEdge >> serviceDiscovery
 
-    processingService >> readConfigEdge >> configurationService
-    processingService >> serviceDiscoveryEdge >> serviceDiscovery
+    engineService >> readConfigEdge >> configurationService
+    engineService >> serviceDiscoveryEdge >> serviceDiscovery
 
     commandService >> readConfigEdge >> configurationService
     commandService >> serviceDiscoveryEdge >> serviceDiscovery

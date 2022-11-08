@@ -21,6 +21,7 @@ You can't create anything apart from the real world and therefore more about s p
 - Kafka
 - Docker
 - Protobuf
+- MongoDB
 
 ## Modules 
 
@@ -29,6 +30,7 @@ Micrusek consists of:
 - desing - Python module with design scripts
 - docker - docker compose files
 - mikrusek-command - Kotlin module accepting incoming time series data. Swagger is available here (http://localhost:8080/swagger-ui/index.html)
+- mikrusek-engine - Kotlin module for consuming events from Kafka. Persisting data into MongoDB
 - internal-protocol - library with generated protocol classes from proto schema.
 
 ## Purpose
@@ -66,6 +68,13 @@ docker-compose -f docker-compose-no_processing.yml up -d
 docker build -t mikrusek-command .
 docker run -p 8081:8080 mikrusek-command
 http://localhost:8081/swagger-ui/index.html
+```
+
+#### Mikrusek-engine
+
+```
+docker build -t mikrusek-engine .
+docker run -p 8082:8080 mikrusek-engine
 ```
 
 #### Kafka
