@@ -60,6 +60,9 @@ Mikrus will be responsible for the storing time series data from multiple source
 docker-compose up -d
 docker-compose down 
 docker-compose -f docker-compose-no_processing.yml up -d
+
+Command: http://localhost:8091/swagger-ui/index.html
+
 ```
 
 #### Mikrusek-command
