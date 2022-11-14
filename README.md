@@ -69,8 +69,8 @@ Command: http://localhost:8091/swagger-ui/index.html
 
 ```
 docker build -t mikrusek-command .
-docker run -p 8081:8080 mikrusek-command
-http://localhost:8081/swagger-ui/index.html
+docker run -p 8091:8080 mikrusek-command
+http://localhost:8091/swagger-ui/index.html
 ```
 
 #### Mikrusek-engine

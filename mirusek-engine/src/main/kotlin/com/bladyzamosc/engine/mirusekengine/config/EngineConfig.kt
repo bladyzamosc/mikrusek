@@ -49,7 +49,4 @@ class EngineConfig {
         factory.consumerFactory = consumerFactory
         return factory
     }
-
-    @Bean
-    fun listener() = Listener()
 }
