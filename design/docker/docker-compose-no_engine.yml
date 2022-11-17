@@ -48,9 +48,9 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://broker:29092
   mongo:
     image: mongo
-    restart: always
-    hostname: mongo
-    container_name: mongo
+    restart: mongo:4.4.15
+    ports:
+      - 127.0.0.1:27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
